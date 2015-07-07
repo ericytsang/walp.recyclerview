@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import gmail.surpluset.recyclerviewanimations.util.DividerItemDecoration;
-import gmail.surpluset.recyclerviewanimations.util.RecyclerViewDisabler;
+import gmail.surpluset.recyclerviewanimations.util.RecyclerViewUtils;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity
         public void onStringSelected(final String s)
         {
             // disable all touches to the recycler view
-            RecyclerViewDisabler.disable(recyclerView);
+            RecyclerViewUtils.disableInputs(recyclerView);
 
             // delay the action associated with the click, because we want to
             // wait for the click animation to complete first
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity
                 public void run()
                 {
                     new AlertDialog.Builder(MainActivity.this).setMessage(s).create().show();
-                    RecyclerViewDisabler.enable(recyclerView);
+                    RecyclerViewUtils.enableInputs(recyclerView);
                 }
             },100);
         }
