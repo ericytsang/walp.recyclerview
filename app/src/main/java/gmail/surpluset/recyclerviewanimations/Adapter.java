@@ -10,13 +10,18 @@ import java.util.UUID;
 
 public class Adapter extends RecyclerView.Adapter<StringViewHolder>
 {
+    private StringViewHolder.Listener listener;
     private final List<String> items;
+    private final ListItemListener listItemListener;
 
     // constructors
 
     public Adapter()
     {
+        this.listener = null;
         this.items = new ArrayList<>();
+        this.listItemListener = new ListItemListener();
+
         setHasStableIds(true);
     }
 
@@ -28,7 +33,7 @@ public class Adapter extends RecyclerView.Adapter<StringViewHolder>
         switch(viewType)
         {
         case 0:
-            return new StringViewHolder(parent);
+            return new StringViewHolder(parent,listItemListener);
         default:
             throw new RuntimeException("unknown viewType");
         }
@@ -54,6 +59,11 @@ public class Adapter extends RecyclerView.Adapter<StringViewHolder>
 
     // public interface
 
+    public void setListener(StringViewHolder.Listener listener)
+    {
+        this.listener = listener;
+    }
+
     public void addRandomListItem()
     {
         String giberish = UUID.randomUUID().toString();
@@ -74,5 +84,16 @@ public class Adapter extends RecyclerView.Adapter<StringViewHolder>
     {
         Collections.shuffle(items);
         notifyDataSetChanged();
+    }
+
+    // private interface
+
+    private class ListItemListener implements StringViewHolder.Listener
+    {
+        @Override
+        public void onStringSelected(final String s)
+        {
+            if(listener != null) listener.onStringSelected(s);
+        }
     }
 }

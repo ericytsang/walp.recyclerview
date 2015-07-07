@@ -1,4 +1,4 @@
-package gmail.surpluset.recyclerviewanimations;
+package gmail.surpluset.recyclerviewanimations.util;
 
 import android.content.Context;
 import android.content.res.TypedArray;
