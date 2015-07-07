@@ -5,7 +5,21 @@ import android.view.MotionEvent;
 
 public class RecyclerViewDisabler implements RecyclerView.OnItemTouchListener
 {
-    public static final RecyclerViewDisabler INSTANCE = new RecyclerViewDisabler();
+    private static final RecyclerViewDisabler INSTANCE = new RecyclerViewDisabler();
+
+    // public interface
+
+    public static void disable(RecyclerView recyclerView)
+    {
+        recyclerView.addOnItemTouchListener(INSTANCE);
+    }
+
+    public static void enable(RecyclerView recyclerView)
+    {
+        recyclerView.removeOnItemTouchListener(INSTANCE);
+    }
+
+    // RecyclerView.OnItemTouchListener
 
     @Override
     public boolean onInterceptTouchEvent(RecyclerView rv,MotionEvent e)

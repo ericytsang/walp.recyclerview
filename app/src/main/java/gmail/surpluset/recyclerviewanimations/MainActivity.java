@@ -73,15 +73,18 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onStringSelected(final String s)
         {
-            recyclerView.addOnItemTouchListener(RecyclerViewDisabler.INSTANCE);
+            // disable all touches to the recycler view
+            RecyclerViewDisabler.disable(recyclerView);
 
+            // delay the action associated with the click, because we want to
+            // wait for the click animation to complete first
             new Handler().postDelayed(new Runnable()
             {
                 @Override
                 public void run()
                 {
                     new AlertDialog.Builder(MainActivity.this).setMessage(s).create().show();
-                    recyclerView.removeOnItemTouchListener(RecyclerViewDisabler.INSTANCE);
+                    RecyclerViewDisabler.enable(recyclerView);
                 }
             },100);
         }
