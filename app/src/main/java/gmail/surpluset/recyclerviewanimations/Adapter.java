@@ -25,7 +25,7 @@ public class Adapter extends RecyclerView.Adapter<StringViewHolder>
         setHasStableIds(true);
     }
 
-    // ArrayAdapter<>
+    // Adapter<>
 
     @Override
     public StringViewHolder onCreateViewHolder(ViewGroup parent,int viewType)
