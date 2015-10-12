@@ -15,14 +15,14 @@ public abstract class ViewHolder<Model> extends RecyclerView.ViewHolder
         super(itemView);
     }
 
-    // public interface
+    // public interface: server methods
 
     /**
      * returns the application context.
      *
      * @return the application context.
      */
-    protected final Context getContext()
+    public final Context getContext()
     {
         return itemView.getContext();
     }
@@ -33,7 +33,7 @@ public abstract class ViewHolder<Model> extends RecyclerView.ViewHolder
      *
      * @param model reference to the new model to present.
      */
-    public abstract void onSetModel(Model model);
+    protected abstract void onSetModel(Model model);
 
     /**
      * sets the view holder's model, and updates the view holder's view to
@@ -62,7 +62,7 @@ public abstract class ViewHolder<Model> extends RecyclerView.ViewHolder
      *
      * @return the view holder's view that it is backing.
      */
-    protected final View getView()
+    public final View getView()
     {
         return itemView;
     }

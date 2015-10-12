@@ -1,26 +1,38 @@
 package gmail.surpluset.recyclerviewanimations;
 
 import android.app.AlertDialog;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import gmail.surpluset.recyclerviewanimations.util.DividerItemDecoration;
-import gmail.surpluset.recyclerviewanimations.util.RecyclerViewUtils;
-
 public class MainActivity extends AppCompatActivity
 {
+    /**
+     * recycler view displays view holders in a particular way.
+     */
     private RecyclerView recyclerView;
+
+    /**
+     * adapter for the recycler view that adapts an arbitrary data source into
+     *   a form that the recycler view can use, so the data may be displayed.
+     */
     private Adapter adapter;
 
-    // AppCompatActivity
+    // public interface: AppCompatActivity
 
+    /**
+     * invoked by android OS when the activity is created.
+     *
+     * initializes the activity's instance data, and configures them...
+     *
+     * @param savedInstanceState the activity's saved instance state.
+     */
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -31,14 +43,22 @@ public class MainActivity extends AppCompatActivity
 
         // configure recycler view
         recyclerView.setAdapter(adapter);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL_LIST));
+        if(false)   // change to false to try out a different layout manager! :)
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        else
+            recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
 
         // configure adapter
-        adapter.setListener(new StringViewHolderListener());
+        adapter.setListener(new AdapterListener());
     }
 
+    /**
+     * populates the application toolbar menu with menu items.
+     *
+     * @param menu the options menu that is being populated with menu items.
+     *
+     * @return true to create a toolbar; false otherwise.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -47,6 +67,17 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * invoked by android OS when menu item in application toolbar menu is
+     *   clicked.
+     *
+     * this method determines which menu item was clicked, and passes flow of
+     *   control to the appropriate code.
+     *
+     * @param item the menu item what was clicked.
+     *
+     * @return true if the click event was handled; false otherwise.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -66,27 +97,24 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    // private interface
+    // private interface: support methods
 
-    private class StringViewHolderListener implements StringViewHolder.Listener
+    /**
+     * implementation of listener for recycler view's adapter
+     */
+    private class AdapterListener implements Adapter.Listener
     {
+        /**
+         * invoked by adapter when list item in the recycler view is clicked;
+         *   displays an alert dialog.
+         *
+         * @param s string of the clicked list item.
+         */
         @Override
-        public void onStringSelected(final String s)
+        public void onListItemClick(String s)
         {
-            // disable all touches to the recycler view
-            RecyclerViewUtils.disableInputs(recyclerView);
-
-            // delay the action associated with the click, because we want to
-            // wait for the click animation to complete first
-            new Handler().postDelayed(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    new AlertDialog.Builder(MainActivity.this).setMessage(s).create().show();
-                    RecyclerViewUtils.enableInputs(recyclerView);
-                }
-            },100);
+            // show a dialog displaying the clicked list item
+            new AlertDialog.Builder(MainActivity.this).setMessage(s).create().show();
         }
     }
 }
