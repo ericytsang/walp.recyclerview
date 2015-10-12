@@ -11,6 +11,9 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
 {
+    // change to false to see a different layout manager in action! :)
+    public static final boolean DEMO_LIST_LAYOUT_MANAGER = true;
+
     /**
      * recycler view displays view holders in a particular way.
      */
@@ -43,10 +46,15 @@ public class MainActivity extends AppCompatActivity
 
         // configure recycler view
         recyclerView.setAdapter(adapter);
-        if(false)   // change to false to try out a different layout manager! :)
+        if(DEMO_LIST_LAYOUT_MANAGER)
+        {
+            recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        }
         else
+        {
             recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        }
 
         // configure adapter
         adapter.setListener(new AdapterListener());

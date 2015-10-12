@@ -42,7 +42,14 @@ public class StringViewHolder extends ViewHolder<String>
     public void onSetModel(String s)
     {
         textView.setText(s);
-        textView.setBackgroundColor(s.hashCode());
+        if(MainActivity.DEMO_LIST_LAYOUT_MANAGER)
+        {
+            textView.setSingleLine(true);
+        }
+        else
+        {
+            textView.setBackgroundColor(s.hashCode());
+        }
     }
 
     // public interface: interfaces
