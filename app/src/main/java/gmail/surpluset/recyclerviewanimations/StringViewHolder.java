@@ -5,18 +5,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+/**
+ * implementation of a {@link ViewHolder} for elements of type {@link String}.
+ */
 public class StringViewHolder extends ViewHolder<String>
 {
-    // instance data: view references
+    /**
+     * a {@link TextView} of the view layout managed by this {@link ViewHolder}.
+     *   used to display the {@link String}.
+     */
     private final TextView textView;
 
-    // public interface: constructors
-
+    /**
+     * inflates the view managed by this view holder, and configures it.
+     *
+     * @param parent
+     * @param listener listener that is notified when this view holder's view is
+     *   clicked.
+     */
     public StringViewHolder(ViewGroup parent,final Listener listener)
     {
         super(LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem,parent,false));
 
-        // initialize instance data: view references
+        // initialize instance data
         this.textView = (TextView) itemView.findViewById(R.id.textview);
 
         // set listeners on views
@@ -30,8 +41,6 @@ public class StringViewHolder extends ViewHolder<String>
         });
     }
 
-    // protected interface: ViewHolder implementation
-
     /**
      * sets the view holder's model, and updates the instance's view to
      *   present the new model.
@@ -42,17 +51,7 @@ public class StringViewHolder extends ViewHolder<String>
     public void onSetModel(String s)
     {
         textView.setText(s);
-        if(MainActivity.DEMO_LIST_LAYOUT_MANAGER)
-        {
-            textView.setSingleLine(true);
-        }
-        else
-        {
-            textView.setBackgroundColor(s.hashCode());
-        }
     }
-
-    // public interface: interfaces
 
     /**
      * defines callbacks for events potentially relevant to listeners.

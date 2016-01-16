@@ -5,20 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
 {
-    // change to false to see a different layout manager in action! :)
-    public static final boolean DEMO_LIST_LAYOUT_MANAGER = true;
-
-    /**
-     * recycler view displays view holders in a particular way.
-     */
-    private RecyclerView recyclerView;
-
     /**
      * adapter for the recycler view that adapts an arbitrary data source into
      *   a form that the recycler view can use, so the data may be displayed.
@@ -41,23 +32,13 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         // initialize instance data
-        this.recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
-        this.adapter = new Adapter();
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        this.adapter = new Adapter(new AdapterListener());
 
         // configure recycler view
         recyclerView.setAdapter(adapter);
-        if(DEMO_LIST_LAYOUT_MANAGER)
-        {
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        }
-        else
-        {
-            recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
-        }
-
-        // configure adapter
-        adapter.setListener(new AdapterListener());
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     /**
@@ -79,8 +60,7 @@ public class MainActivity extends AppCompatActivity
      * invoked by android OS when menu item in application toolbar menu is
      *   clicked.
      *
-     * this method determines which menu item was clicked, and passes flow of
-     *   control to the appropriate code.
+     * this method determines which menu item was clicked, and handles it.
      *
      * @param item the menu item what was clicked.
      *

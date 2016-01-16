@@ -4,18 +4,20 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+/**
+ * a view holder is used by a recycler view and its recycler view adapter to
+ *   manage a view layout used to present an element of a specific type.
+ *
+ * @param <Model>
+ */
 public abstract class ViewHolder<Model> extends RecyclerView.ViewHolder
 {
     private Model model;
-
-    // constructor
 
     public ViewHolder(View itemView)
     {
         super(itemView);
     }
-
-    // public interface: server methods
 
     /**
      * returns the application context.
